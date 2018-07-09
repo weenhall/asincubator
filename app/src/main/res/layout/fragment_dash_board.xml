@@ -14,7 +14,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="220dp"
                 android:orientation="horizontal">
 
                 <com.github.mikephil.charting.charts.LineChart
@@ -25,11 +25,21 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="220dp"
                 android:orientation="horizontal">
 
                 <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barchart"
+                    android:id="@+id/sbarchart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="horizontal">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/mbarchart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>

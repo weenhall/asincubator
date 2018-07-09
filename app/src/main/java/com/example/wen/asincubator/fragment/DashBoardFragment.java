@@ -2,6 +2,7 @@ package com.example.wen.asincubator.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wen.asincubator.R;
+import com.example.wen.asincubator.helper.BarChartHelper;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -32,6 +35,8 @@ public class DashBoardFragment extends Fragment {
     private static final String TAG = "DashBoardFragment";
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LineChart mLineChart;
+    private BarChart sBarChart;
+    private BarChart mBarChart;
 
     @Nullable
     @Override
@@ -57,8 +62,13 @@ public class DashBoardFragment extends Fragment {
             }
         });
         initLineChart();
+        initBarChart();
     }
 
+
+    /**
+     *初始化折线图
+     */
     public void initLineChart() {
         List<Map<String, Integer>> list = new ArrayList<>();
         Random random = new Random();
@@ -121,5 +131,46 @@ public class DashBoardFragment extends Fragment {
         //是否绘制在图表里面
         legend.setDrawInside(false);
         mLineChart.invalidate();
+    }
+
+    /**
+     * 初始化柱状图
+     */
+    public void initBarChart(){
+        sBarChart=(BarChart) getView().findViewById(R.id.sbarchart);
+        mBarChart=(BarChart) getView().findViewById(R.id.mbarchart);
+
+        BarChartHelper  sbarChartHelper=new BarChartHelper(sBarChart);
+        BarChartHelper mbarChartHelper=new BarChartHelper(mBarChart);
+        //设置x轴数据
+        ArrayList<Float> xValues=new ArrayList<>();
+        for (int i = 0; i<=5; i++) {
+            xValues.add((float)i);
+        }
+        //设置y轴数据
+        List<List<Float>> yValues=new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            List<Float> yValue=new ArrayList<>();
+            for (int j = 0; j <=5; j++) {
+                yValue.add((float) (Math.random() * 80));
+            }
+            yValues.add(yValue);
+        }
+        //柱状图颜色
+        List<Integer> colours=new ArrayList<>();
+        colours.add(Color.GREEN);
+        colours.add(Color.BLUE);
+        colours.add(Color.RED);
+        colours.add(Color.CYAN);
+        List<String> labels=new ArrayList<>();
+        labels.add("足球");
+        labels.add("篮球");
+        labels.add("乒乓球");
+        labels.add("羽毛球");
+
+        sbarChartHelper.singleBarChart(xValues,yValues.get(0),labels.get(1),colours.get(3));
+        sbarChartHelper.setDescription("运动比例");
+        mbarChartHelper.mutilBarChart(xValues,yValues,labels,colours);
+        mbarChartHelper.setXAxis(6f,0f,6);
     }
 }
